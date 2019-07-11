@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Wordplease</title>
+    </head>
+    <body>
+        <main>
+            <ul class="list">
+                {% for blog in latest_blogs %}
+                <li class="list-item list-item--{{ blog.style }}">
+                    <div class="list-item__name">
+                        <p>{{ blog.name }}</p>
+                    </div>
+                    <div class="list-item__description">
+                        <p>{{ blog.description }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </main>
+    </body>
+</html>
