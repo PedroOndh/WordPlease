@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head_title %} Wordplease - Blog page {% endblock %}
+
+{% block main_title %} Posts list {% endblock %}
+
+{% block main_content %}
+<ul class="list">
+    {% for blog in latest_blogs %}
+    <li class="list-item list-item--{{ blog.style }}">
+        <a href="{% url 'blog_page' blog.pk %}">
+            <div class="list-item__name">
+                <h2>{{ blog.name }}</h2>
+            </div>
+            <div class="list-item__description">
+                <p>{{ blog.description }}</p>
+            </div>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{%  endblock %}

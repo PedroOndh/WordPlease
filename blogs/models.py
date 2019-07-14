@@ -25,3 +25,23 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+
+    # blog = models.ForeignKey(Blog, related_name="posts", on_delete=models.CASCADE)  # Allows access to posts from Blogs.posts instead of Blogs.post_set
+
+    title = models.CharField(max_length=250)
+
+    content = models.TextField()
+
+    image_url = models.URLField(blank=True, null=True)
+
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    modification_date = models.DateTimeField(auto_now=True)
+
+    # categories = models.ManyToManyField(Category, related_name="posts")  # Allows access to posts from Category.posts instead of Blogs.category_set
+
+    def __str__(self):
+        return self.title
