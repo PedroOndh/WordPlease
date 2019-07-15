@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -13,6 +14,8 @@ class Blog(models.Model):
         [DARK, 'Dark version']
     ]
 
+    owner = models.OneToOneField(User, related_name="blog", on_delete=models.CASCADE)  # Ensures that a user only have one blog
+
     name = models.CharField(max_length=150)
 
     description = models.TextField(null=True, blank=True, max_length=400)
@@ -27,13 +30,22 @@ class Blog(models.Model):
         return self.name
 
 
+class Category(models.Model):
+
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
 
-    # blog = models.ForeignKey(Blog, related_name="posts", on_delete=models.CASCADE)  # Allows access to posts from Blogs.posts instead of Blogs.post_set
+    blog = models.ForeignKey(Blog, related_name="posts", on_delete=models.CASCADE)  # Allows access to posts from Blogs.posts instead of Blogs.post_set
 
     title = models.CharField(max_length=250)
 
-    content = models.TextField()
+    content_introduction = models.TextField()
+
+    content_body = models.TextField()
 
     image_url = models.URLField(blank=True, null=True)
 
@@ -41,7 +53,7 @@ class Post(models.Model):
 
     modification_date = models.DateTimeField(auto_now=True)
 
-    # categories = models.ManyToManyField(Category, related_name="posts")  # Allows access to posts from Category.posts instead of Blogs.category_set
+    categories = models.ManyToManyField(Category, related_name="posts")  # Allows access to posts from Category.posts instead of Blogs.category_set
 
     def __str__(self):
         return self.title

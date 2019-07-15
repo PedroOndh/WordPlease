@@ -7,4 +7,4 @@ class PostForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image_url']
+        fields = ['title', 'content_introduction', 'content_body', 'image_url']

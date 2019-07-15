@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from blogs.forms import PostForm
-from blogs.models import Blog
+from blogs.models import Blog, Post
 
 
 def blogs_index(request):
@@ -38,14 +38,19 @@ def blog_page(request, pk):
     return HttpResponse(html)
 
 def new_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            new_post = form.save()
-            messages.success(request, 'Post creado correctamente con ID {0}'.format(new_post.pk))
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            post = Post()
+            post.blog = request.user.blog
+            form = PostForm(request.POST, instance=post)
+            if form.is_valid():
+                new_post = form.save()
+                messages.success(request, 'Post creado correctamente con ID {0}'.format(new_post.pk))
+                form = PostForm()
+        else:
             form = PostForm()
-    else:
-        form = PostForm()
 
-    context = {'form': form}
-    return render(request, 'blogs/new.html', context)
+        context = {'form': form}
+        return render(request, 'blogs/new_post.html', context)
+    else:
+        return redirect('home')
