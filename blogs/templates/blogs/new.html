@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
-{% block head_title %} Wordplease - Login {% endblock %}
+{% block head_title %} Wordplease - New Post {% endblock %}
 
-{% block main_title %} Login {% endblock %}
+{% block main_title %} New Post {% endblock %}
 
 {% block main_content %}
     {% for message in messages %}
-        <p style="color:red">{{ message }}</p>
+        <p style="color:green">{{ message }}</p>
     {% endfor %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <div>
-            <button type="submit">Login</button>
+            <button type="submit">Save Post</button>
         </div>
     </form>
 {%  endblock %}
