@@ -1,56 +1,55 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from blogs.forms import PostForm
-from blogs.models import Blog, Post
+from blogs.models import Post
 
 
-def blogs_index(request):
-
+def posts_index(request):
     # Recoger los blogs existentes
-    blogs = Blog.objects.all().order_by('-modification_date')
+    posts = Post.objects.all().order_by('-modification_date')
 
     # Creamos el contexto
 
-    context = {'latest_blogs': blogs[:9]}
+    context = {'latest_posts': posts[:9]}
 
     # Crear una respuesta HTML
     html = render(request, 'blogs/blogs_index.html', context)
 
-    #Devolver la respuesta HTML
+    # Devolver la respuesta HTML
     return HttpResponse(html)
 
-def blog_page(request, pk):
 
+def blog_page(request, kwargs):
     # Recoger los blogs existentes
-    blog = get_object_or_404(Blog, pk=pk)
+    posts = Post.objects.all().filter(kwargs.get('username')).order_by('-modification_date')
 
     # Creamos el contexto
 
-    context = {'latest_blogs': blog}
+    context = {'latest_posts': posts}
 
     # Crear una respuesta HTML
     html = render(request, 'blogs/blogs_index.html', context)
 
-    #Devolver la respuesta HTML
+    # Devolver la respuesta HTML
     return HttpResponse(html)
 
+
+@login_required
 def new_post(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            post = Post()
-            post.blog = request.user.blog
-            form = PostForm(request.POST, instance=post)
-            if form.is_valid():
-                new_post = form.save()
-                messages.success(request, 'Post creado correctamente con ID {0}'.format(new_post.pk))
-                form = PostForm()
-        else:
+    if request.method == 'POST':
+        post = Post()
+        post.owner = request.user
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            new_post = form.save()
+            messages.success(request, 'Post creado correctamente con ID {0}'.format(new_post.pk))
             form = PostForm()
-
-        context = {'form': form}
-        return render(request, 'blogs/new_post.html', context)
     else:
-        return redirect('home')
+        form = PostForm()
+
+    context = {'form': form}
+    return render(request, 'blogs/new_post.html', context)

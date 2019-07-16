@@ -4,7 +4,7 @@
 
 {% block main_content %}
 <ul class="list">
-    {% for blog in latest_blogs %}
+    {% for blog in latest_posts %}
     <li class="list-item list-item--{{ blog.style }}">
         <a href="{% url 'blog_page' blog.pk %}">
             <div class="list-item__name">
