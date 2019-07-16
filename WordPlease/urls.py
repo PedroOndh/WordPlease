@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from blogs.views import posts_index, blog_page, new_post
-from users.views import login, logout, new_user
+from users.views import new_user, LogoutView, LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('login/', login, name='login'),
-    path('logout', logout, name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout', LogoutView.as_view(), name='logout'),
     path('blog/<username>/', blog_page, name='blog_page'),
     path('new-post/', new_post, name='new_post'),
     path('signup/', new_user, name='new_user'),

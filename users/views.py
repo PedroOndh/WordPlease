@@ -4,14 +4,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login as django_login, logout as django_logout
 
 # Create your views here.
+from django.views import View
+
 from users.forms import loginForm, UserForm
 
 
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home')
+        form = loginForm()
+        context = {'form': form}
+        return render(request, 'users/login.html', context)
 
-    if request.method == 'POST':
+    def post(self, request):
         form = loginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('usr')
@@ -23,16 +29,14 @@ def login(request):
                 django_login(request, user)
                 url = request.GET.get('next', 'home')
                 return redirect(url)
-    else:
-        form = loginForm()
-
-    context = {'form': form}
-    return render(request, 'users/login.html', context)
+        context = {'form': form}
+        return render(request, 'users/login.html', context)
 
 
-def logout(request):
-    django_logout(request)
-    return redirect('login')
+class LogoutView(View):
+    def get(self, request):
+        django_logout(request)
+        return redirect('login')
 
 
 def new_user(request):

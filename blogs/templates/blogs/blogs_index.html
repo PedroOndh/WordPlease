@@ -4,14 +4,14 @@
 
 {% block main_content %}
 <ul class="list">
-    {% for blog in latest_posts %}
+    {% for post in latest_posts %}
     <li class="list-item list-item--{{ blog.style }}">
-        <a href="{% url 'blog_page' blog.pk %}">
+        <a href="{% url 'blog_page' post.owner %}">
             <div class="list-item__name">
-                <h2>{{ blog.name }}</h2>
+                <h2>{{ post.title }}</h2>
             </div>
             <div class="list-item__description">
-                <p>{{ blog.description }}</p>
+                <p>{{ post.owner }}</p>
             </div>
         </a>
     </li>

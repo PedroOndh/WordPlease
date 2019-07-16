@@ -23,9 +23,9 @@ def posts_index(request):
     return HttpResponse(html)
 
 
-def blog_page(request, kwargs):
+def blog_page(request, username):
     # Recoger los blogs existentes
-    posts = Post.objects.all().filter(kwargs.get('username')).order_by('-modification_date')
+    posts = Post.objects.all().filter(owner=username)
 
     # Creamos el contexto
 
