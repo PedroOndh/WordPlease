@@ -12,7 +12,7 @@ class Category(models.Model):
 
 class Post(models.Model):
 
-    owner = models.OneToOneField(User, related_name="blog", on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
 
     title = models.CharField(max_length=250)
 
@@ -26,7 +26,7 @@ class Post(models.Model):
 
     modification_date = models.DateTimeField(auto_now=True)
 
-    categories = models.ManyToManyField(Category, related_name="posts")  # Allows access to posts from Category.posts instead of Blogs.category_set
+    categories = models.ManyToManyField(Category, related_name="posts")
 
     def __str__(self):
         return self.title

@@ -1,5 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as django_login, logout as django_logout
 
@@ -39,18 +41,24 @@ class LogoutView(View):
         return redirect('login')
 
 
-def new_user(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            form = UserForm(request.POST)
-            if form.is_valid():
-                new_user = form.save()
-                messages.success(request, 'Usuario creado correctamente con ID {0}'.format(new_user.pk))
-                form = UserForm()
-        else:
-            form = UserForm()
+class NewUserView(View):
 
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home')
+        else:
+            form = UserCreationForm()
+            context = {'form': form}
+            return render(request, 'users/new_user.html', context)
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
         context = {'form': form}
         return render(request, 'users/new_user.html', context)

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block main_title %} Post Detail {% endblock %}
+
+{% block main_content %}
+<ul class="list">
+    <li>
+        <a href="{% url 'blog_page' post.owner %}">
+            <div class="list-item__name">
+                <h2>{{ post.title }}</h2>
+            </div>
+            <div class="list-item__description">
+                <p>{{ post.owner }}</p>
+            </div>
+        </a>
+    </li>
+</ul>
+{%  endblock %}
+
