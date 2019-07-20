@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head_title %} Wordplease - Blog page {% endblock %}
+{% block head_title %} Wordplease {% endblock %}
 
-{% block main_title %} Blog de {{ latest_posts.1.owner }} {% endblock %}
+{% block main_title %} Last posts {% endblock %}
 
 {% block main_content %}
 <ul class="list">
@@ -28,3 +28,4 @@
     {% endfor %}
 </ul>
 {%  endblock %}
+

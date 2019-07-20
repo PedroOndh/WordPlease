@@ -47,12 +47,12 @@ class NewUserView(View):
         if request.user.is_authenticated:
             return redirect('home')
         else:
-            form = UserCreationForm()
+            form = UserForm()
             context = {'form': form}
             return render(request, 'users/new_user.html', context)
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')

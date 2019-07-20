@@ -1,13 +1,150 @@
+a{
+    text-decoration: none;
+}
+
+header {
+    padding: 1rem 2rem;
+    background: #ef2853;
+    color: white;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h3 {
+    font-size: 1.5rem;
+}
+
+header nav {
+    padding-top: 1rem;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+}
+
+main {
+    min-height: 70vh;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 3rem 2rem 0;
+}
+
+
 ul.list{
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+    margin: 1rem;
 }
 
 li.list-item {
    list-style: none;
    background: #ddd;
-   padding: 1rem;
+   padding: 2rem;
    margin: 1rem;
-   width: calc(25% - 4rem);
+   width: calc(100% - 6rem);
+}
+
+li.list-item a {
+    color: black;
+}
+
+.list-item__picture, .post__image{
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -webkit-justify-content: center;
+       -ms-flex-pack: center;
+           justify-content: center;
+   -webkit-align-content: center;
+       -ms-flex-line-pack: center;
+           align-content: center;
+    max-height: 30vh;
+    margin-top: 0;
+}
+
+.list-item__picture img, .post__image img{
+   min-width: 100%;
+   min-height: 100%;
+   -o-object-fit: cover;
+      object-fit: cover;
+}
+
+.list-item__name {
+    margin: 2rem 0.5rem;
+    font-size: 1.5rem;
+}
+
+.list-item__blog {
+    margin: 1rem;
+    text-align: right;
+}
+
+form {
+        margin: 1rem;
+}
+
+form p {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+form p label {
+    padding-bottom: 1rem;
+}
+
+form p input, form p textarea{
+    padding: 5px;
+}
+
+form button {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.post__image{
+    margin: 1rem 2rem;
+}
+
+.post__description {
+    font-size: 1.2rem;
+    margin: 2rem;
+}
+
+footer {
+    padding: 3rem;
+    background: #ef2853;
+    color: white;
+    margin-top: 3rem;
+    text-align: right;
+}
+
+@media screen and (min-width: 767px){
+    li.list-item {
+        width: calc(50% - 6rem);
+    }
+    header{
+        flex-direction: row;
+    }
+    header nav{
+        padding-top: 0;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    li.list-item {
+        width: calc(25% - 6rem);
+    }
 }

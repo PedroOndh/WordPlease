@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -21,6 +23,8 @@ class Post(models.Model):
     content_body = models.TextField()
 
     image_url = models.URLField(blank=True, null=True)
+
+    publishing_date = models.DateTimeField()
 
     creation_date = models.DateTimeField(auto_now_add=True)
 

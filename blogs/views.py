@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -15,14 +17,15 @@ class PostsIndexView(View):
 
     def get(self, request):
         # Recoger los blogs existentes
-        posts = Post.objects.all().order_by('-modification_date')
+        date = datetime.datetime.now()
+        posts = Post.objects.all().order_by('-modification_date').filter(publishing_date__lte=date)
 
         # Creamos el contexto
 
         context = {'latest_posts': posts[:9]}
 
         # Crear una respuesta HTML
-        html = render(request, 'blogs/blogs_index.html', context)
+        html = render(request, 'blogs/posts_index.html', context)
 
         # Devolver la respuesta HTML
         return HttpResponse(html)
@@ -37,11 +40,29 @@ class BlogPageView(View):
     def get(self, request, **kwargs):
         # Recoger los blogs existentes
         username = kwargs.get('username')
-        posts = Post.objects.filter(owner=self.get_user_id(username))
+        date = datetime.datetime.now()
+        posts = Post.objects.filter(owner=self.get_user_id(username)).order_by('-modification_date').filter(publishing_date__lte=date)
 
         # Creamos el contexto
 
         context = {'latest_posts': posts}
+
+        # Crear una respuesta HTML
+        html = render(request, 'blogs/blog_page.html', context)
+
+        # Devolver la respuesta HTML
+        return HttpResponse(html)
+
+
+class BlogIndexView(View):
+
+    def get(self, request):
+        # Recoger los blogs existentes
+        blogs = User.objects.all()
+
+        # Creamos el contexto
+
+        context = {'blogs': blogs}
 
         # Crear una respuesta HTML
         html = render(request, 'blogs/blogs_index.html', context)

@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 
-{% block main_title %} Blog list {% endblock %}
+{% block head_title %} Wordplease - Bloga {% endblock %}
+
+{% block main_title %} Blogs {% endblock %}
 
 {% block main_content %}
 <ul class="list">
-    {% for post in latest_posts %}
-    <li class="list-item list-item--{{ blog.style }}">
-        <a href="{% url 'blog_page' post.owner %}">
+    {% for blog in blogs %}
+    <li class="list-item">
+        <a href="{% url 'blog_page' blog.username %}">
             <div class="list-item__name">
-                <h2>{{ post.title }}</h2>
-            </div>
-            <div class="list-item__description">
-                <p>{{ post.owner }}</p>
+                <h2>{{ blog.username }}</h2>
             </div>
         </a>
     </li>
