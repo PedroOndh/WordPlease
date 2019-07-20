@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from users.permissions import UserPermission
+from users.permissions import UserPermission, BlogsPermission
 from users.serializers import UserSerializer, UserListSerializer, WriteUserSerializer, BlogListSerializer
 
 
@@ -59,15 +59,26 @@ class UsersViewSet(GenericViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BlogsViewSet(ModelViewSet):
+class BlogsViewSet(GenericViewSet):
 
+    permission_classes = [BlogsPermission]
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['username']
     ordering_fields = ['username']
+
+    def get_serializer_class(self):
+        return BlogListSerializer
 
     def get_queryset(self):
         queryset = User.objects.all()
         return queryset
 
-    def get_serializer_class(self):
-        return BlogListSerializer
+    def list(self, request):
+        users = User.objects.all()
+        user_list = []
+        for user in users:
+            user_list.append({
+                'username': user.username,
+                'blog_url': request.get_host() + '/' + str(user.username)
+            })
+        return Response(user_list)

@@ -51,8 +51,7 @@ class WriteUserSerializer(UserSerializer):
         return instance
 
 
-class BlogListSerializer(ModelSerializer):
+class BlogListSerializer(serializers.Serializer):
 
-    class Meta:
-        model = User
-        fields = ['username']
+    username = serializers.CharField()
+    blog_url = serializers.CharField(source='get_absolute_url', read_only=True)
