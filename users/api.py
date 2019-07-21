@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
-from rest_framework import status
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import ModelViewSet
 
 from users.permissions import UserPermission, BlogsPermission
 from users.serializers import UserSerializer, UserListSerializer, BlogListSerializer
