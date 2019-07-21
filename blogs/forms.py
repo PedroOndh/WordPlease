@@ -1,4 +1,4 @@
-import datetime
+from django.utils import timezone
 
 from django.forms import ModelForm
 
@@ -8,7 +8,7 @@ from django import forms
 
 class PostForm(ModelForm):
 
-    publishing_date = forms.DateTimeField(initial=datetime.datetime.now())
+    publishing_date = forms.DateTimeField(initial=timezone.now())
 
     class Meta:
         model = Post
