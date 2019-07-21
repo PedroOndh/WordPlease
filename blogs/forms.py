@@ -1,6 +1,6 @@
 import datetime
 
-from django.forms import ModelForm, forms
+from django.forms import ModelForm
 
 from blogs.models import Post
 from django import forms
