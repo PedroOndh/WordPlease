@@ -1,12 +1,14 @@
 # WordPlease
 A blog platform with an API REST enterely made with Django
 
-## For initiate the project:
+## Initiating the project:
 
+For installing dependencies:
 ```shell
 pip install -r requirements.txt
 ```
-and
+
+For creating a superuser
 ```shell
 python manage.py createsuperuser
 ```
@@ -18,6 +20,8 @@ python manage.py createsuperuser
 ```shell
 http://127.0.0.1:8000/
 ```
+
+*It's important to highlight that the categories will be created in the admin panel*
 
 
 ### API
