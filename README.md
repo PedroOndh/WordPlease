@@ -21,7 +21,7 @@ python manage.py createsuperuser
 http://127.0.0.1:8000/
 ```
 
-*It's important to highlight that the categories will be created in the admin panel*
+*It's important to highlight that the categories will be created using the admin panel*
 
 
 ### API
